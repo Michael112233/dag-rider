@@ -1,5 +1,5 @@
 use anyhow::{Result};
-use clap::{App, AppSettings, ArgMatches, SubCommand};
+use clap::{App, ArgMatches, SubCommand};
 use env_logger::Env;
 use log::info;
 use tokio::sync::mpsc::{channel, Receiver};
@@ -67,7 +67,7 @@ async fn run(matches: &ArgMatches<'_>) -> Result<()> {
     );
 
     wait_and_print_vertexs(vertex_output_receiver).await;
-    unreachable!();
+    Ok(())
 }
 
 async fn wait_and_print_vertexs(mut vertex_output_receiver: Receiver<Vertex>) {

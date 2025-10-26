@@ -1,0 +1,80 @@
+warning: virtual workspace defaulting to `resolver = "1"` despite one or more workspace members being on edition 2021 which implies `resolver = "2"`
+note: to keep the current resolver, specify `workspace.resolver = "1"` in the workspace root's manifest
+note: to use the edition 2021 resolver, specify `workspace.resolver = "2"` in the workspace root's manifest
+note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: unused import: `debug`
+ --> transaction/src/block_builder.rs:2:11
+  |
+2 | use log::{debug, error, info};
+  |           ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `format`
+ --> consensus/src/dag.rs:2:25
+  |
+2 | use std::fmt::{Display, format, Formatter};
+  |                         ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::ops::Add`
+ --> consensus/src/dag.rs:3:5
+  |
+3 | use std::ops::Add;
+  |     ^^^^^^^^^^^^^
+
+warning: field `delivered_vertices` is never read
+  --> consensus/src/state.rs:10:9
+   |
+ 8 | pub struct State {
+   |            ----- field in this struct
+ 9 |     pub current_round: Round,
+10 |     pub delivered_vertices: HashSet<VertexHash>,
+   |         ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: method `set_vertex_as_delivered` is never used
+  --> consensus/src/state.rs:29:12
+   |
+14 | impl State {
+   | ---------- method in this implementation
+...
+29 |     pub fn set_vertex_as_delivered(&mut self, vertex_hash: VertexHash) {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused `Result` that must be used
+   --> consensus/src/dag.rs:129:13
+    |
+129 |             write!(f, "{}", line);
+    |             ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this `Result` may be an `Err` variant, which should be handled
+    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+    |
+129 |             let _ = write!(f, "{}", line);
+    |             +++++++
+
+warning: `transaction` (lib) generated 1 warning (run `cargo fix --lib -p transaction` to apply 1 suggestion)
+warning: `consensus` (lib) generated 5 warnings (run `cargo fix --lib -p consensus` to apply 2 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running `target/debug/node run --id 1`
+[2025-10-26T04:17:52Z DEBUG vertex::vertex_coordinator] Start listening for vertices from other nodes
+[2025-10-26T04:17:52Z INFO  vertex::vertex_coordinator] Vertex Coordinator listening to the messages on 0.0.0.0:1234
+
+thread 'tokio-runtime-worker' panicked at /Users/michael/Documents/GitHub/dag-rider/network/src/receiver.rs:45:14:
+Failed to bind TCP port: Os { code: 48, kind: AddrInUse, message: "Address already in use" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[2025-10-26T04:17:52Z DEBUG transaction::transaction_coordinator] Start listening for transactions on 0.0.0.0:1244
+[2025-10-26T04:17:52Z DEBUG transaction::transaction_coordinator] Start listening for blocks on 0.0.0.0:1254
+
+thread 'tokio-runtime-worker' panicked at /Users/michael/Documents/GitHub/dag-rider/network/src/receiver.rs:45:14:
+Failed to bind TCP port: Os { code: 48, kind: AddrInUse, message: "Address already in use" }
+
+thread 'tokio-runtime-worker' panicked at /Users/michael/Documents/GitHub/dag-rider/network/src/receiver.rs:45:14:
+Failed to bind TCP port: Os { code: 48, kind: AddrInUse, message: "Address already in use" }

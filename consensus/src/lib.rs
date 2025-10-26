@@ -12,7 +12,7 @@ use crate::state::State;
 mod dag;
 mod state;
 
-const MAX_WAVE: Wave = 4;
+const MAX_WAVE: Wave = 6;  // 修改为6轮一个波次
 
 pub struct Consensus {
     node_id: Id,
@@ -76,6 +76,10 @@ impl Consensus {
                 },
                 Some(block) = self.blocks_receiver.recv() => {
                     self.blocks_to_propose.push(block)
+                },
+                else => {
+                    // No more messages, continue with consensus logic
+                    break;
                 }
             }
 

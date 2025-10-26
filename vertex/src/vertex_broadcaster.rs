@@ -21,8 +21,8 @@ impl VertexBroadcaster {
 
     pub async fn run(&mut self) {
         loop {
-            match self.vertex_to_broadcast_receiver.recv().await.unwrap() {
-                vertex => {
+            match self.vertex_to_broadcast_receiver.recv().await {
+                Some(vertex) => {
                     debug!("Vertex received for broadcast {}", vertex);
                     let addresses = self
                         .committee
@@ -31,10 +31,14 @@ impl VertexBroadcaster {
 
                     let handlers = self.network.broadcast(addresses, Bytes::from(bytes)).await;
                     for h in handlers {
-                        if let Err(e) = h.await {
+                        if let Err(_e) = h.await {
                             error!("Broadcast of vertices was not successful")
                         }
                     }
+                },
+                None => {
+                    // Channel closed, exit the loop
+                    break;
                 }
             }
         }

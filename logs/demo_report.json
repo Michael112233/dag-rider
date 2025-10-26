@@ -1,0 +1,13 @@
+{
+  "start_time": "2025-10-26T12:07:27.801752",
+  "end_time": "2025-10-26T12:08:13.160776",
+  "duration": 45.359027,
+  "nodes_started": 4,
+  "consensus_events": 4,
+  "ports_status": {
+    "1234": true,
+    "1235": true,
+    "1236": true,
+    "1237": true
+  }
+}
